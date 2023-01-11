@@ -96,7 +96,7 @@ func (e *baseExporter) start(_ context.Context, host component.Host) error {
 
 func (e *baseExporter) pushTraces(ctx context.Context, td ptrace.Traces) error {
 	tr := ptraceotlp.NewExportRequestFromTraces(td)
-	request, err := tr.MarshalProto()
+	request, err := tr.MarshalJSON()
 	if err != nil {
 		return consumererror.NewPermanent(err)
 	}
@@ -106,7 +106,7 @@ func (e *baseExporter) pushTraces(ctx context.Context, td ptrace.Traces) error {
 
 func (e *baseExporter) pushMetrics(ctx context.Context, md pmetric.Metrics) error {
 	tr := pmetricotlp.NewExportRequestFromMetrics(md)
-	request, err := tr.MarshalProto()
+	request, err := tr.MarshalJSON()
 	if err != nil {
 		return consumererror.NewPermanent(err)
 	}
@@ -115,7 +115,7 @@ func (e *baseExporter) pushMetrics(ctx context.Context, md pmetric.Metrics) erro
 
 func (e *baseExporter) pushLogs(ctx context.Context, ld plog.Logs) error {
 	tr := plogotlp.NewExportRequestFromLogs(ld)
-	request, err := tr.MarshalProto()
+	request, err := tr.MarshalJSON()
 	if err != nil {
 		return consumererror.NewPermanent(err)
 	}
